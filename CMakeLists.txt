@@ -7,6 +7,7 @@
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_CXX_STANDARD 11)
 set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
 set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
 
@@ -75,6 +76,7 @@ target_link_libraries(${target}
     ${DEFAULT_LIBRARIES}
     ${dlib_LIBRARIES}
     annotator::annotatorplugin
+    mvnc
 )
 
 

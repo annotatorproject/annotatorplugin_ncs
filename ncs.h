@@ -8,6 +8,8 @@
 #include <QtCore/QtPlugin>
 #include <QtGui/QIcon>
 #include <opencv2/core/mat.hpp>
+#include <opencv2/opencv.hpp>
+#include <mvnc.h>
 
 using namespace AnnotatorLib;
 using std::shared_ptr;
@@ -46,6 +48,24 @@ class NCS : public Plugin {
 
   shared_ptr<Frame> frame = 0;
   shared_ptr<Frame> lastFrame = 0;
+
+  typedef unsigned short half;
+  const int networkDim = 224;
+  float networkMean[3] = {0.40787054*255.0, 0.45752458*255.0, 0.48109378*255.0};
+  #define NAME_SIZE 100
+
+  mvncStatus retCode;
+  void *deviceHandle;
+  char devName[NAME_SIZE];
+
+  unsigned int graphFileLen;
+  void* graphFileBuf;
+  void* graphHandle;
+
+  bool graphLoaded = false;
+
+  static void *LoadFile(const char *path, unsigned int *length);
+  static half *LoadImage(cv::Mat resizedMat, int reqsize, float *mean);
 };
 }
 }
