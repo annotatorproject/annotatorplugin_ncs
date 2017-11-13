@@ -3,13 +3,16 @@
 
 #include "widget.h"
 
+#include <string>
+#include <vector>
+
 #include <annotator/plugins/plugin.h>
+#include <mvnc.h>
 #include <QtCore/QObject>
 #include <QtCore/QtPlugin>
 #include <QtGui/QIcon>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/opencv.hpp>
-#include <mvnc.h>
 
 using namespace AnnotatorLib;
 using std::shared_ptr;
@@ -23,8 +26,7 @@ namespace Plugins {
 
 class NCS : public Plugin {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID "annotator.ncs" FILE
-                        "ncs.json")
+  Q_PLUGIN_METADATA(IID "annotator.ncs" FILE "ncs.json")
   Q_INTERFACES(Annotator::Plugin)
 
  public:
@@ -38,6 +40,10 @@ class NCS : public Plugin {
   shared_ptr<Object> getObject() const override;
   void setLastAnnotation(shared_ptr<Annotation> annotation) override;
   std::vector<shared_ptr<Commands::Command>> getCommands() override;
+  virtual bool requiresObject() const override { return false; }
+
+  void setLabelmap(std::string filename);
+  void setGraph(std::string filename);
 
  protected:
   cv::Mat frameImg;
@@ -51,21 +57,23 @@ class NCS : public Plugin {
 
   typedef unsigned short half;
   const int networkDim = 224;
-  float networkMean[3] = {0.40787054*255.0, 0.45752458*255.0, 0.48109378*255.0};
-  #define NAME_SIZE 100
+  float networkMean[3] = {0.40787054 * 255.0, 0.45752458 * 255.0,
+                          0.48109378 * 255.0};
+#define NAME_SIZE 100
 
   mvncStatus retCode;
   void *deviceHandle;
   char devName[NAME_SIZE];
 
   unsigned int graphFileLen;
-  void* graphFileBuf;
-  void* graphHandle;
+  void *graphFileBuf;
+  void *graphHandle;
 
   bool graphLoaded = false;
 
   static void *LoadFile(const char *path, unsigned int *length);
   static half *LoadImage(cv::Mat resizedMat, int reqsize, float *mean);
+  std::vector<std::string> labels;
 };
 }
 }
