@@ -109,6 +109,27 @@ std::vector<shared_ptr<Commands::Command>> NCS::getCommands() {
   return commands;
 }
 
+void NCS::setAlexNet() {
+  networkDim = 227;
+  networkMean[0] = 0.40787054 * 255.0;
+  networkMean[1] = 0.45752458 * 255.0;
+  networkMean[2] = 0.48109378 * 255.0;
+}
+
+void NCS::setGoogLeNet() {
+  networkDim = 224;
+  networkMean[0] = 0.40787054 * 255.0;
+  networkMean[1] = 0.45752458 * 255.0;
+  networkMean[2] = 0.48109378 * 255.0;
+}
+
+void NCS::setSqueezeNet() {
+  networkDim = 227;
+  networkMean[0] = 0.40787054 * 255.0;
+  networkMean[1] = 0.45752458 * 255.0;
+  networkMean[2] = 0.48109378 * 255.0;
+}
+
 void NCS::setLabelmap(std::string filename) {
   labels.clear();
   std::ifstream labelfile(filename);

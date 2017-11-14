@@ -31,6 +31,12 @@ class Widget : public QWidget {
 
   void on_labelsButton_clicked();
 
+  void on_alexNetRadioButton_toggled(bool checked);
+
+  void on_googleNetRadioButton_toggled(bool checked);
+
+  void on_squeezeNetRadioButton_toggled(bool checked);
+
  private:
   Ui::Widget *ui;
   Annotator::Plugins::NCS *ncs;

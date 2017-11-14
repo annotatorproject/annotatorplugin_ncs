@@ -42,6 +42,9 @@ class NCS : public Plugin {
   std::vector<shared_ptr<Commands::Command>> getCommands() override;
   virtual bool requiresObject() const override { return false; }
 
+  void setAlexNet();
+  void setGoogLeNet();
+  void setSqueezeNet();
   void setLabelmap(std::string filename);
   void setGraph(std::string filename);
 
@@ -56,7 +59,7 @@ class NCS : public Plugin {
   shared_ptr<Frame> lastFrame = 0;
 
   typedef unsigned short half;
-  const int networkDim = 224;
+  int networkDim = 224;
   float networkMean[3] = {0.40787054 * 255.0, 0.45752458 * 255.0,
                           0.48109378 * 255.0};
 #define NAME_SIZE 100
